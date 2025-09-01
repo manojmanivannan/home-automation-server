@@ -2,20 +2,20 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: home_automation
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
   automation-server:
     build: .
     environment:
-      DATABASE_URL: postgresql://user:password@db/home_automation
+      DATABASE_URL: postgresql://postgres:password@db/home_automation
       LOG_LEVEL: DEBUG
     ports:
       - "8000:8000"
